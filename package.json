@@ -1,0 +1,20 @@
+{
+  "name": "courage_bot",
+  "version": "1.0.0",
+  "description": "Discord Node.js Bot",
+  "main": "bot.ts",
+  "scripts": {
+    "start": "ts-node src/Bot.ts"
+  },
+  "author": "Crosszery",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
