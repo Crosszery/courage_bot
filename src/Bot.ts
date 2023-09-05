@@ -12,6 +12,8 @@ import fs from "node:fs";
 // Environment variables
 import 'dotenv/config'
 
+console.log("Bot initialization...");
+
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -72,8 +74,5 @@ client.on(Events.InteractionCreate, async interaction => {
 		}
 	}
 });
-
-
-console.log("Bot initialization...");
 
 client.login(process.env.TOKEN);
