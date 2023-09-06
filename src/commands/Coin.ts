@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction} from "discord.js";
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('coin')
-		.setDescription('Бросок монетки>'),
-	async execute(interaction: any) {
+		.setDescription('Бросок монетки'),
+	async execute(interaction: ChatInputCommandInteraction) {
 		if (Math.random() < 0.50) {
 			await interaction.reply('🪙 Решка 🪙');
 		}

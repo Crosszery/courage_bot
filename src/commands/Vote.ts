@@ -1,20 +1,22 @@
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('vote')
-		.setDescription('Голосование')
+		.setDescription('Голосование Да/Нет')
 		.addStringOption(option =>
 			option.setName('offer')
 				.setDescription('Предложение')
+				.setMaxLength(1000)
 				.setRequired(true),
 		)
 		.addStringOption(option =>
 			option.setName('desc')
 				.setDescription('Описание предложения')
+				.setMaxLength(1000)
 				.setRequired(false),
 		),
-	async execute(interaction: any) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		// Generate Embed
 		const voteReply = new EmbedBuilder()
 			.setColor('#ff9966')

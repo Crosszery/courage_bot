@@ -1,12 +1,18 @@
 // Discord main lib
-import { Client, GatewayIntentBits, Events, REST, Routes, Collection } from "discord.js";
+import { Client, GatewayIntentBits, Collection } from "discord.js";
 
+// Add commands collection to client
 declare module "discord.js" {
     export interface Client {
         commands: Collection<unknown, any>
     }
 }
 
+// EventListeners
+import clientReady from "./events/clientReady";
+import interactionCreate from "./events/interactionCreate";
+
+// Utility libs
 import fs from "node:fs";
 
 // Environment variables
@@ -40,39 +46,11 @@ for (const file of commandFiles) {
 	}
 }
 
-// Startup
-client.once('ready', function() {
-	console.log(`Ready! Logged in as ${client.user?.tag}`);
-
-	// Slash command registration
-	const rest = new REST({ version: '10' }).setToken(process.env.TOKEN!);
-	//console.log('commands = ', commands);
-	rest.put(Routes.applicationGuildCommands(process.env.APPLICATION_ID!, process.env.GUILD_ID!), { body: commands })
-		.then(() => console.log(`Successfully registered application slash commands`))
-		.catch(console.error);
-});
+// Client ready event + slash commands registration
+clientReady(client, commands);
 
 // Chat command listener
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
+interactionCreate(client);
 
-	const command = interaction.client.commands.get(interaction.commandName);
-
-	if (!command) {
-		console.error(`[ERROR] No command matching ${interaction.commandName} was found.`);
-		return;
-	}
-
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-		} else {
-			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
-	}
-});
 
 client.login(process.env.TOKEN);

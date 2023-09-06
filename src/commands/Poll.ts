@@ -1,55 +1,64 @@
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('poll')
-		.setDescription('Голосование)')
+		.setDescription('Голосование (множественный выбор)')
 		.addStringOption(option =>
 			option.setName('offer')
-				.setDescription('Первый вариант')
+				.setDescription('Предложение')
+				.setMaxLength(400)
 				.setRequired(true),
 		)
 		.addStringOption(option =>
 			option.setName('v1')
 				.setDescription('Первый вариант')
+				.setMaxLength(200)
 				.setRequired(true),
 		)
 		.addStringOption(option =>
 			option.setName('v2')
 				.setDescription('Второй вариант')
+				.setMaxLength(200)
 				.setRequired(true),
 		)
 		.addStringOption(option =>
 			option.setName('v3')
 				.setDescription('Третий вариант')
+				.setMaxLength(200)
 				.setRequired(false),
 		)
 		.addStringOption(option =>
 			option.setName('v4')
 				.setDescription('Четвертый вариант')
+				.setMaxLength(200)
 				.setRequired(false),
 		)
 		.addStringOption(option =>
 			option.setName('v5')
 				.setDescription('Пятый вариант')
+				.setMaxLength(200)
 				.setRequired(false),
 		)
 		.addStringOption(option =>
 			option.setName('v6')
 				.setDescription('Шестой вариант')
+				.setMaxLength(200)
 				.setRequired(false),
 		)
 		.addStringOption(option =>
 			option.setName('v7')
 				.setDescription('Седьмой вариант')
+				.setMaxLength(200)
 				.setRequired(false),
 		)
 		.addStringOption(option =>
 			option.setName('v8')
 				.setDescription('Восьмой вариант')
+				.setMaxLength(200)
 				.setRequired(false),
 		),
-	async execute(interaction: any) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		// Generate Embed
 		let description:  string = "";
 		description += interaction.options.getString('v1') != null? `1️⃣ ${interaction.options.getString('v1')}\n` : '';
